@@ -3,6 +3,7 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
+const axios = require("axios")
 
 const PROXY_CONFIG = {
     type: 'socks5',
@@ -10,6 +11,26 @@ const PROXY_CONFIG = {
     port: 10774,
     //proxyAuth: 'u7pwoh18'
 };
+
+const proxyList = [];
+
+function getIpList() {
+    axios.get('https://advanced.name/freeproxy/618fcbf100855')
+        .then((res) => {
+            let result = res.data.split('\n');
+            result.forEach(element => {
+                let address = element.split(':')
+                proxyList.push({
+                    host: address[0], // ip
+                    port: address[1] // port
+                })
+            });
+            console.log(proxyList)
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+}
 
 
 const PROXY_RULES = {
@@ -31,7 +52,7 @@ async function createWindow () {
     await mainWindow.loadFile(path.join(__dirname, '/src/index.html'))
     const session = mainWindow.webContents.session
 
-
+        await getIpList();
         session.setProxy(PROXY_RULES).then(() => {
             mainWindow.loadURL('https://coin-bet.io/');
         }).catch((err) => {
