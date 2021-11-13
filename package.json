@@ -1,0 +1,33 @@
+{
+  "name": "my-electron-app",
+  "version": "1.0.0",
+  "description": "Browser withs proxy!",
+  "main": "main.js",
+  "author": "Malyshev R",
+  "license": "MIT",
+  "build": {
+    "appId": "com.electron.app",
+    "win": {
+      "target": "portable"
+    },
+    "portable": {
+      "unicode": false,
+      "artifactName": "my_electron_app.exe"
+    }
+  },
+  "devDependencies": {
+    "axios": "^0.24.0",
+    "electron": "^15.3.1",
+    "electron-builder": "^22.13.1",
+    "electron-packager": "^15.4.0",
+    "proxy-check": "^1.0.8"
+  },
+  "scripts": {
+    "start": "electron . ",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "proxy-checker": "git+https://github.com/newx666/proxy-checker.git"
+  }
+}
