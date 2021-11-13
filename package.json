@@ -20,7 +20,9 @@
     "electron": "^15.3.1",
     "electron-builder": "^22.13.1",
     "electron-packager": "^15.4.0",
-    "proxy-check": "^1.0.8"
+    "ping": "^0.4.1",
+    "proxy-check": "^1.0.8",
+    "proxy-verifier": "^0.5.0"
   },
   "scripts": {
     "start": "electron . ",
@@ -28,6 +30,7 @@
     "dist": "electron-builder"
   },
   "dependencies": {
-    "proxy-checker": "git+https://github.com/newx666/proxy-checker.git"
+    "proxy-checker": "git+https://github.com/newx666/proxy-checker.git",
+    "tcp-ping-port": "^1.0.1"
   }
 }

@@ -3,7 +3,7 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-const axios = require("axios")
+const { proxyList,getProxy } = require('./src/utils/proxy');
 
 const PROXY_CONFIG = {
     type: 'socks5',
@@ -11,27 +11,6 @@ const PROXY_CONFIG = {
     port: 10774,
     //proxyAuth: 'u7pwoh18'
 };
-
-const proxyList = [];
-
-function getIpList() {
-    axios.get('https://advanced.name/freeproxy/618fcbf100855')
-        .then((res) => {
-            let result = res.data.split('\n');
-            result.forEach(element => {
-                let address = element.split(':')
-                proxyList.push({
-                    host: address[0], // ip
-                    port: address[1] // port
-                })
-            });
-            console.log(proxyList)
-        })
-        .catch((error) => {
-            console.log(error)
-        });
-}
-
 
 const PROXY_RULES = {
     proxyRules: PROXY_CONFIG.type+'://'+PROXY_CONFIG.host+':'+PROXY_CONFIG.port,
@@ -47,23 +26,26 @@ async function createWindow () {
         title: 'coinbet',
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
-           }
+        }
     })
+
     await mainWindow.loadFile(path.join(__dirname, '/src/index.html'))
     const session = mainWindow.webContents.session
+    //const getListProxy = getProxy();
 
-        await getIpList();
-        session.setProxy(PROXY_RULES).then(() => {
-            mainWindow.loadURL('https://coin-bet.io/');
-        }).catch((err) => {
-            console.log(err)
-            mainWindow.loadFile(path.join(__dirname,'/src/error.html'))
-        });
+        //if(proxyList.length > 0) {
+            session.setProxy(PROXY_RULES).then(() => {
+                mainWindow.loadURL('https://coin-bet.io/');
+            }).catch((err) => {
+                console.log(err)
+                mainWindow.loadFile(path.join(__dirname,'/src/error.html'))
+            });
 
-        mainWindow.webContents.on("did-fail-load", function() {
-            console.log(1)
-            mainWindow.loadFile(path.join(__dirname,'/src/error.html'))
-        });
+            mainWindow.webContents.on("did-fail-load", function() {
+                console.log(1)
+                mainWindow.loadFile(path.join(__dirname,'/src/error.html'))
+            });
+        //}
 
     //mainWindow.loadURL('https://google.com/')
     // and load the index.html of the app.
