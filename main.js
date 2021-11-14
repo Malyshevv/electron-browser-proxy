@@ -22,7 +22,7 @@ async function createWindow () {
     mainWindow = new BrowserWindow({
         ...CONFIG_WINDOW,
         webPreferences: {
-            preload: path.join(__dirname, './scripts/preload.js'),
+            preload: path.join(__dirname, './js/preload.js'),
             //nodeIntegration: true,
             //enableRemoteModule: true,
         }
