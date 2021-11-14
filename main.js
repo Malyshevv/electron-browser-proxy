@@ -9,7 +9,7 @@ const path = require('path')
 const {PROXY_RULES} = require('./config/configProxy')
 const {CONFIG_WINDOW} = require('./config/configWindow')
 //My modules
-const { proxyList,getProxy } = require('./src/utils/proxy');
+//const { proxyList,getProxy } = require('./src/utils/proxy');
 const { CustomMenu } = require('./src/components/Menu')
 
 

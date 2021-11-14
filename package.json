@@ -6,13 +6,15 @@
   "author": "Malyshev R",
   "license": "MIT",
   "build": {
+    "productName": "MY APP",
     "appId": "com.electron.app",
     "win": {
-      "target": "portable"
+      "target": "portable",
+      "icon": "build/icon.png"
     },
     "portable": {
       "unicode": false,
-      "artifactName": "my_electron_app.exe"
+      "artifactName": "MyApp.exe"
     }
   },
   "devDependencies": {
@@ -20,10 +22,7 @@
     "custom-electron-titlebar": "^3.2.7",
     "electron": "^15.3.1",
     "electron-builder": "^22.13.1",
-    "electron-packager": "^15.4.0",
-    "ping": "^0.4.1",
-    "proxy-check": "^1.0.8",
-    "proxy-verifier": "^0.5.0"
+    "electron-packager": "^15.4.0"
   },
   "scripts": {
     "start": "electron . ",
@@ -32,8 +31,6 @@
   },
   "dependencies": {
     "@electron/remote": "^2.0.1",
-    "@treverix/remote": "^0.1.1",
-    "proxy-checker": "git+https://github.com/newx666/proxy-checker.git",
     "tcp-ping-port": "^1.0.1"
   }
 }
