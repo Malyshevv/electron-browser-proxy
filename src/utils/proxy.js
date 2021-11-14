@@ -3,7 +3,7 @@ const {tcpPingPort} = require("tcp-ping-port");
 
 const proxyList = [];
 
-async function getProxy() {
+function getProxy() {
     axios.get('https://advanced.name/freeproxy/618fcbf100855?type=socks5')
         .then((res) => {
             let result = res.data.split('\n');

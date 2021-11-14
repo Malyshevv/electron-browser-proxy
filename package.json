@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "axios": "^0.24.0",
+    "custom-electron-titlebar": "^3.2.7",
     "electron": "^15.3.1",
     "electron-builder": "^22.13.1",
     "electron-packager": "^15.4.0",
@@ -30,6 +31,8 @@
     "dist": "electron-builder"
   },
   "dependencies": {
+    "@electron/remote": "^2.0.1",
+    "@treverix/remote": "^0.1.1",
     "proxy-checker": "git+https://github.com/newx666/proxy-checker.git",
     "tcp-ping-port": "^1.0.1"
   }

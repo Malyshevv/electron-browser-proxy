@@ -1,50 +1,55 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+//System modules
+const { BrowserWindow, Menu, app } = require('electron')
 const path = require('path')
+
+// Require Config
+const {PROXY_RULES} = require('./config/configProxy')
+const {CONFIG_WINDOW} = require('./config/configWindow')
+//My modules
 const { proxyList,getProxy } = require('./src/utils/proxy');
+const { CustomMenu } = require('./src/components/Menu')
 
-const PROXY_CONFIG = {
-    type: 'socks5',
-    host: '159.65.232.22', //http://free-proxy.cz/ru/
-    port: 10774,
-    //proxyAuth: 'u7pwoh18'
-};
 
-const PROXY_RULES = {
-    proxyRules: PROXY_CONFIG.type+'://'+PROXY_CONFIG.host+':'+PROXY_CONFIG.port,
-}
 
+let mainWindow;
 
 async function createWindow () {
-    // Create the browser window.
 
-    const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        title: 'coinbet',
+    // Create the browser window.
+    mainWindow = new BrowserWindow({
+        ...CONFIG_WINDOW,
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, './scripts/preload.js'),
+            //nodeIntegration: true,
+            //enableRemoteModule: true,
         }
     })
 
-    await mainWindow.loadFile(path.join(__dirname, '/src/index.html'))
+    //const menu = Menu.buildFromTemplate(CustomMenu())
+    //Menu.setApplicationMenu(menu)
+
+
+    //mainWindow.webContents.openDevTools()
+
+    await mainWindow.loadFile(path.join(__dirname, '/src/loading.html'))
     const session = mainWindow.webContents.session
     //const getListProxy = getProxy();
 
         //if(proxyList.length > 0) {
-            session.setProxy(PROXY_RULES).then(() => {
-                mainWindow.loadURL('https://coin-bet.io/');
-            }).catch((err) => {
-                console.log(err)
-                mainWindow.loadFile(path.join(__dirname,'/src/error.html'))
-            });
+    session.setProxy(PROXY_RULES).then(() => {
+        mainWindow.loadURL('https://coin-bet.io/');
+    }).catch((err) => {
+        console.log(err)
+        mainWindow.loadFile(path.join(__dirname,'/src/error.html'))
+    });
 
-            mainWindow.webContents.on("did-fail-load", function() {
-                console.log(1)
-                mainWindow.loadFile(path.join(__dirname,'/src/error.html'))
-            });
+    mainWindow.webContents.on("did-fail-load", function() {
+        console.log(1)
+        mainWindow.loadFile(path.join(__dirname,'/src/error.html'))
+    });
         //}
 
     //mainWindow.loadURL('https://google.com/')
