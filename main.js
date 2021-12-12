@@ -40,7 +40,7 @@ async function createWindow () {
 
         //if(proxyList.length > 0) {
     session.setProxy(PROXY_RULES).then(() => {
-        mainWindow.loadURL('https://coin-bet.io/');
+        mainWindow.loadURL('YOUR URL');
     }).catch((err) => {
         console.log(err)
         mainWindow.loadFile(path.join(__dirname,'/src/error.html'))
